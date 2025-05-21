@@ -115,103 +115,184 @@ FOREIGN KEY (id_barang) REFERENCES barang(id_barang)
 );
 
 INSERT INTO customer (id_customer, nama_customer, alamat_customer, kota_customer, telp_customer)
+
 VALUES
+
 ('A.1.001', 'Ronaldo', 'Jl. Kalimantan No.15', 'Yogyakarta', '543210'),
+
 ('A.1.002', 'Messi', 'Jl. Sulawesi No.25', 'Yogyakarta', '567890'),
+
 ('A.1.003', 'Bale', 'Jl. Arimbi No.18', 'Semarang', '565755'),
+
 ('A.1.004', 'Mbappe', 'Jl. Kurawa No.19', 'Surakarta', '435678'),
+
 ('A.1.005', 'Salah', 'Jl. Pandawa No.27', 'Surakarta', '765747'),
+
 ('A.1.006', 'Kane', 'Jl. Drupadi No.07', 'Semarang', '895647'),
+
 ('A.1.007', 'Modric', 'Jl. Sumatera No.12', 'Yogyakarta', '768584');
 
 INSERT INTO produsen (id_produsen, nama_produsen, alamat_produsen, kota_produsen, telepon_produsen, email_produsen)
+
 VALUES
+
 ('T1.01', 'PT Petkasa', 'Jl. Bromo no.10', 'Jakarta', '9534638', 'admin@petkasa.com'),
+
 ('T1.02', 'PT Jaya', 'Jl. Merapi no.5', 'Bandung', '9508867', 'admin@jaya.com'),
+
 ('T1.03', 'PT Makmur', 'Jl. Jaya Wijaya no.78', 'Jakarta', '58786676', 'kontak@makmur.com'),
+
 ('T1.04', 'PT Mandiri', 'Jl. Sunbing no.3', 'Bekasi', '65876746', 'sales@mandiri.com'),
+
 ('T1.05', 'PT Untung', 'Jl. Merhabu no.24', 'Bekasi', '33765748', 'kontak@untung.com');
+
     
+
 INSERT INTO pemasok (id_pemasok, nama_pemasok, alamat_pemasok, kota_pemasok, email_pemasok)
+
 VALUES
+
 ('P001', 'CV Cahaya', 'Jl. Mangkubumi no.16', 'Yogyakarta', 'panglima@cahaya.com'),
+
 ('P002', 'CV Matahari', 'Jl. Diponegoro no.65', 'Semarang', 'kasal@matahari.com'),
+
 ('P003', 'CV Bulan', 'Jl. Veteran no.85', 'Jakarta', 'letnan@bulan.com'),
+
 ('P004', 'CV Bintang', 'Jl. Soekarno no.35', 'Yogyakarta', 'kopral@bintang.com'),
+
 ('P005', 'CV Bumi', 'Jl. Supratman no.24', 'Semarang', 'prajurit@bumi.com'),
+
 ('P006', 'CV Laut', 'Jl. Radjiman no.14', 'Bandung', 'jendral@laut.com');
 
+
+
 INSERT INTO barang (id_barang, nama_barang, tahun_produksi, id_produsen, id_pemasok)
+
 VALUES
+
 ('B.2.001', 'Kemeja', 2018, 'T1.01', 'P002'),
+
 ('B.2.002', 'Gamis', 2018, 'T1.02', 'P001'),
+
 ('B.2.003', 'Mukena', 2016, 'T1.01', 'P003'),
+
 ('B.2.004', 'Seragam Sekolah', 2017, 'T1.01', 'P003'),
+
 ('B.2.005', 'Topi', 2017, 'T1.02', 'P004'),
+
 ('B.2.006', 'Panci', 2017, 'T1.03', 'P002');
+
     
+
 INSERT INTO detail_barang (id_barang, kategori_barang, jumlah, harga_pembelian)
+
 VALUES
+
 ('B.2.001', 'Fashion Pria', 5, 50000),
+
 ('B.2.002', 'Fashion Wanita', 4, 100000),
+
 ('B.2.003', 'Fashion Muslim', 5, 120000),
+
 ('B.2.004', 'Fashion Anak', 7, 80000),
+
 ('B.2.005', 'Aksesoris', 5, 30000),
+
 ('B.2.006', 'Dapur', 5, 150000);
 
+
+
 INSERT INTO pembelian (id_pembelian, tgl_pembelian, id_customer)
+
 VALUES
+
 ('S.101', '2016-02-03', 'A.1.002'),
+
 ('S.102', '2016-02-03', 'A.1.004'),
+
 ('S.103', '2016-02-05', 'A.1.003'),
+
 ('S.104', '2016-02-06', 'A.1.005');
+
     
+
 INSERT INTO detail_pembelian (id_pembelian, id_barang, status_pembelian)
+
 VALUES
+
 ('S.101', 'B.2.001', 'tunai'),
+
 ('S.102', 'B.2.006', 'tunai'),
+
 ('S.102', 'B.2.002', 'tunai'),
+
 ('S.102', 'B.2.003', 'kredit'),
+
 ('S.103', 'B.2.004', 'kredit'),
+
 ('S.104', 'B.2.005', 'kredit');
 
 1. Buatlah trigger untuk mengurangi stock saat terjadi pembelian. Tampilkan !
 
 DELIMITER //
+
 CREATE TRIGGER pembelian
+
 AFTER INSERT ON detail_pembelian
+
 FOR EACH ROW
+
 BEGIN
 
+
 UPDATE detail_barang 
+
 SET jumlah = jumlah - 1
+
 WHERE id_barang = NEW.id_barang;
 
+
 END //
+
 DELIMITER ;
 
 2. Buatlah trigger untuk menambah stock saat terjadi penjualan Tampilkan !
 
 CREATE TABLE penjualan (
+
 id_penjualan VARCHAR(7) NOT NULL,
+
 id_pemasok VARCHAR(6) NOT NULL,
+
 id_barang VARCHAR(7) NOT NULL,
+
 jumlah INT NOT NULL,
+
 PRIMARY KEY (id_penjualan),
+
 FOREIGN KEY (id_pemasok) REFERENCES pemasok(id_pemasok),
+
 FOREIGN KEY (id_barang) REFERENCES barang(id_barang)
+
 );
 
 DELIMITER //
 
 CREATE TRIGGER penjualan
+
 AFTER INSERT ON penjualan
+
 FOR EACH ROW
+
 BEGIN
 
+
 UPDATE detail_barang
+
 SET jumlah = jumlah + NEW.jumlah
+
 WHERE id_barang = NEW.id_barang;
+
 
 END //
 
@@ -224,20 +305,30 @@ ALTER TABLE pembelian ADD COLUMN total_harga INT DEFAULT 0;
 DELIMITER //
 
 CREATE TRIGGER update_total_harga
+
 AFTER INSERT ON detail_pembelian
+
 FOR EACH ROW
+
 BEGIN
 
 DECLARE total INT;
 
 SELECT SUM(db.harga_pembelian)
+
 INTO total
+
 FROM detail_pembelian dp
+
 JOIN detail_barang db ON dp.id_barang = db.id_barang
+
 WHERE dp.id_pembelian = NEW.id_pembelian;
 
+
 UPDATE pembelian
+
 SET total_harga = IFNULL(total, 0)
+
 WHERE id_pembelian = NEW.id_pembelian;
 
 END //
@@ -246,17 +337,26 @@ DELIMITER ;
 
 4. Buatlah fungsi untuk menghitung jumlah barang yang diproduksi tahun 2017. Tampilkan !
 
+
 DELIMITER //
+
 CREATE FUNCTION jumlah_barang_2017()
+
 RETURNS INT
+
 DETERMINISTIC
+
 BEGIN
 
+
 DECLARE total INT;
+
 SELECT COUNT(*) INTO total FROM barang WHERE tahun_produksi = 2017;
+
 RETURN total;
 
 END //
+
 DELIMITER ;
 
 
