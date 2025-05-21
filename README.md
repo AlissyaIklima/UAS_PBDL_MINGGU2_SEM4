@@ -4,13 +4,18 @@
 
 CREATE TABLE customer (
 
-
 id_customer VARCHAR(7) NOT NULL,
+
 nama_customer VARCHAR(30) NOT NULL,
+
 alamat_customer VARCHAR(50),
+
 kota_customer VARCHAR(15),
+
 telp_customer VARCHAR(15),
+
 PRIMARY KEY (id_customer)
+
 );
 
 CREATE TABLE produsen (
