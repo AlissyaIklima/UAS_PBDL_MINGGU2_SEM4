@@ -19,57 +19,99 @@ PRIMARY KEY (id_customer)
 );
 
 CREATE TABLE produsen (
+
 id_produsen VARCHAR(7) NOT NULL,
+
 nama_produsen VARCHAR(30) NOT NULL,
+
 alamat_produsen VARCHAR(50),
+
 kota_produsen VARCHAR(50),
+
 telepon_produsen VARCHAR(15),
+
 email_produsen VARCHAR(30),
+
 PRIMARY KEY (id_produsen)
+
 );
 
 CREATE TABLE pemasok (
+
 id_pemasok VARCHAR(6) NOT NULL,
+
 nama_pemasok VARCHAR(20) NOT NULL,
+
 alamat_pemasok VARCHAR(50) NOT NULL,
+
 kota_pemasok VARCHAR(15),
+
 email_pemasok VARCHAR(50),
+
 PRIMARY KEY (id_pemasok)
+
 );
 
 CREATE TABLE barang (
+
 id_barang VARCHAR(7) NOT NULL,
+
 nama_barang VARCHAR(50) NOT NULL,
+
 tahun_produksi YEAR(4) NOT NULL,
+
 id_produsen VARCHAR(7) NOT NULL,
+
 id_pemasok VARCHAR(6) NOT NULL,
+
 PRIMARY KEY (id_barang),
+
 FOREIGN KEY (id_produsen) REFERENCES produsen(id_produsen),
+
 FOREIGN KEY (id_pemasok) REFERENCES pemasok(id_pemasok)
+
 );
 
 CREATE TABLE detail_barang (
+
 id_barang VARCHAR(7) NOT NULL,
+
 kategori_barang VARCHAR(25) NOT NULL,
+
 jumlah SMALLINT(3) NOT NULL,
+
 harga_pembelian INT NOT NULL,
+
 FOREIGN KEY (id_barang) REFERENCES barang(id_barang)
+
 );
 
 CREATE TABLE pembelian (
+
 id_pembelian VARCHAR(6) NOT NULL,
+
 tgl_pembelian DATE NOT NULL,
+
 id_customer VARCHAR(7) NOT NULL,
+
 PRIMARY KEY (id_pembelian),
+
 FOREIGN KEY (id_customer) REFERENCES customer(id_customer)
+
 );
 
 CREATE TABLE detail_pembelian (
+
 id_pembelian VARCHAR(6) NOT NULL,
+
 id_barang VARCHAR(7) NOT NULL,
+
 status_pembelian VARCHAR(10) NOT NULL,
+
 FOREIGN KEY (id_pembelian) REFERENCES pembelian(id_pembelian),
+
 FOREIGN KEY (id_barang) REFERENCES barang(id_barang)
+
 );
 
 INSERT INTO customer (id_customer, nama_customer, alamat_customer, kota_customer, telp_customer)
