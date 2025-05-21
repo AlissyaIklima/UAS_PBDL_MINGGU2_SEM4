@@ -364,13 +364,20 @@ DELIMITER ;
 
 DELIMITER //
 
+
 CREATE FUNCTION jumlah_customer_yogyakarta()
+
 RETURNS INT
+
 DETERMINISTIC
+
 BEGIN
 
+
 DECLARE total INT;
+
 SELECT COUNT(*) INTO total FROM customer WHERE kota_customer = 'Yogyakarta';
+
 RETURN total;
 
 END //
@@ -383,13 +390,19 @@ DELIMITER ;
 DELIMITER //
 
 CREATE PROCEDURE update_stok_barang(
+
 IN baru_id_barang VARCHAR(7),
+
 IN baru_jumlah INT
+
 )
+
 BEGIN
 
 UPDATE detail_barang
+
 SET jumlah = baru_jumlah
+
 WHERE id_barang = baru_id_barang;
 
 END //
@@ -402,11 +415,15 @@ DELIMITER ;
 DELIMITER //
 
 CREATE PROCEDURE barang_per_tahun(IN tahun YEAR)
+
 BEGIN
 
 SELECT b.nama_barang, d.kategori_barang
+
 FROM barang b
+
 JOIN detail_barang d ON b.id_barang = d.id_barang
+
 WHERE b.tahun_produksi = tahun;
 
 END //
@@ -419,8 +436,11 @@ DELIMITER ;
 DELIMITER //
 
 CREATE FUNCTION harga_setelah_pajak(harga INT)
+
 RETURNS DECIMAL(10,2)
+
 DETERMINISTIC
+
 BEGIN
 
 RETURN harga - (harga * 0.11);
@@ -430,7 +450,9 @@ END //
 DELIMITER ;
 
 SELECT 
+
 id_barang, harga_pembelian, harga_setelah_pajak(harga_pembelian) AS harga_setelah_pajak
+
 FROM detail_barang;
 
 
@@ -440,25 +462,37 @@ FROM detail_barang;
 DELIMITER //
 
 CREATE FUNCTION status_stok(p_jumlah INT)
+
 RETURNS VARCHAR(20)
+
 DETERMINISTIC
+
 BEGIN
+
 IF p_jumlah < 2 THEN RETURN 'Stock Limit';
+
 ELSE RETURN 'Stock Aman';
+
 END IF;
+
 END //
 
 DELIMITER ;
 
 SELECT 
+
 id_barang, jumlah, status_stok(jumlah) AS keterangan
+
 FROM detail_barang;
 
 10. Buatlah prosedur untuk menghitung luas lingkaran. Tampilkan!
 
 DELIMITER //
+
 CREATE PROCEDURE luas_lingkaran(
+
 IN jari2 DOUBLE, 
+
 OUT luas DOUBLE
 )
 BEGIN
@@ -466,9 +500,11 @@ BEGIN
 SET luas = 3.14 * jari2 * jari2;
 
 END //
+
 DELIMITER ;
 
 CALL luas_lingkaran(10, @hasil);
+
 SELECT @hasil;
 
 
