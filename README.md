@@ -3,6 +3,8 @@
 # UAS latihan_soal
 
 CREATE TABLE customer (
+
+
 id_customer VARCHAR(7) NOT NULL,
 nama_customer VARCHAR(30) NOT NULL,
 alamat_customer VARCHAR(50),
