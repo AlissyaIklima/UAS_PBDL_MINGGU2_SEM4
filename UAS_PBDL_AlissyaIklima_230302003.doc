@@ -13,26 +13,6 @@ mysql> create table obat(
     -> harga int not null);
 Query OK, 0 rows affected (0.51 sec)
 
-mysql> insert table obat (id_obat, nama_obat, jenis, tahun_kadaluwarsa, stok, harga) values (
-    -> ('OB001', 'Paracetamol', 'Tablet' ,2024, 20, 5000),
-    -> ('OB002', 'Amoxicillin', 'Kapsul', 2023, 12, 7500),
-    -> ('OB003', 'Vitamin C', 'Tablet' ,2025 ,30 ,3000)
-    -> ('OB004', 'Antasida Cair' ,2023 ,8 ,6000);
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table obat (id_obat, nama_obat, jenis, tahun_kadaluwarsa, stok, harga) values (
-' at line 1
-mysql> INSERT INTO obat (id_obat, nama_obat, jenis, tahun_kadaluwarsa, stok, harga)
-    -> values
-    -> ('OB001', 'Paracetamol', 'Tablet', 2024, 20, 5000),
-    -> ('OB002', 'Amoxicillin', 'Kapsul', 2023, 12, 7500),
-    -> ('OB003', 'Vitamin C', 'Tablet', 2025, 30, 3000),
-    -> ('OB004', 'Antasida Cair', 2023, 8, 6000),
-    -> ('OB005', 'Ibuprofen', 'Tablet', 2024, 5, 8000),
-    -> ('OB006', 'Cetirizine', 'Tablet', 2025, 15, 7000),
-    -> ('OB007', 'Loratadine', 'Tablet', 2024, 9, 7500),
-    -> ('OB008', 'Salbutamol', 'Inhaler', 2024, 11, 25000),
-    -> ('OB009', 'Dextromethorphan', 'Sirup', 2023, 7, 12000),
-    -> ('OB010', 'Omeprazole', 'Kapsul', 2025, 10, 10000);
-ERROR 1136 (21S01): Column count doesn't match value count at row 4
 mysql> INSERT INTO obat (id_obat, nama_obat, jenis, tahun_kadaluwarsa, stok, harga)
     -> values
     -> ('OB001', 'Paracetamol', 'Tablet', 2024, 20, 5000),
@@ -103,21 +83,6 @@ mysql> create table resep(
     -> FOREIGN KEY (id_obat) REFERENCES obat(id_obat));
 Query OK, 0 rows affected (0.34 sec)
 
-mysql> insert into (id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep)
-    -> values
-    -> ('RS001', 'PS001', 'OB001', 2, 10000, '2024-05-01'),
-    -> ('RS002', 'PS002', 'OB003', 1, 3000, '2024-05-01'),
-    -> ('RS003', 'PS003', 'OB005', 2, 16000, '2024-05-02'),
-    -> ('RS004', 'PS004', 'OB004', 1, 6000, '2024-05-02'),
-    -> ('RS005', 'PS005', 'OB002', 3, 22500, '2024-05-03'),
-    -> ('RS006', 'PS006', 'OB006', 1, 7000, '2024-05-04'),
-    -> ('RS007', 'PS007', 'OB007', 2, 15000, '2024-05-04'),
-    -> ('RS008', 'PS008', 'OB008', 1, 25000, '2024-05-05'),
-    -> ('RS009', 'PS009', 'OB009', 1, 12000, '2024-05-06'),
-    -> ('RS010', 'PS010', 'OB010', 2, 20000, '2024-05-06');
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep)
-values
-('RS' at line 1
 mysql> insert into resep(id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep)
     -> values
     -> ('RS001', 'PS001', 'OB001', 2, 10000, '2024-05-01'),
