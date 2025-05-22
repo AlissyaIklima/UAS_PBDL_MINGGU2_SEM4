@@ -1,26 +1,9 @@
 mysql> create database klinik_kesehatan;
 Query OK, 1 row affected (2.84 sec)
 
-mysql> create teble obat(
-    -> id_obat varchar(10) primary key not null,
-    -> nama_obat varchar(50) not null,
-    -> jenis varchar(20) not null,
-    -> tahun_kadaluwarsa int not null,
-    -> stok int not null,
-    -> harga int not null);
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'teble obat(
-id_obat varchar(10) primary key not null,
-nama_obat varchar(50) not ' at line 1
-mysql> create table obat(
-    -> id_obat varchar(10) primary key not null,
-    -> nama_obat varchar(50) not null,
-    -> jenis varchar(20) not null,
-    -> tahun_kadaluwarsa int not null,
-    -> stok int not null,
-    -> harga int not null);
-ERROR 1046 (3D000): No database selected
 mysql> use klinik_kesehatan;
 Database changed
+
 mysql> create table obat(
     -> id_obat varchar(10) primary key not null,
     -> nama_obat varchar(50) not null,
