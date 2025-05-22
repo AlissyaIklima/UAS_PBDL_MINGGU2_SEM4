@@ -1,0 +1,768 @@
+mysql> create database klinik_kesehatan;
+Query OK, 1 row affected (2.84 sec)
+
+mysql> create teble obat(
+    -> id_obat varchar(10) primary key not null,
+    -> nama_obat varchar(50) not null,
+    -> jenis varchar(20) not null,
+    -> tahun_kadaluwarsa int not null,
+    -> stok int not null,
+    -> harga int not null);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'teble obat(
+id_obat varchar(10) primary key not null,
+nama_obat varchar(50) not ' at line 1
+mysql> create table obat(
+    -> id_obat varchar(10) primary key not null,
+    -> nama_obat varchar(50) not null,
+    -> jenis varchar(20) not null,
+    -> tahun_kadaluwarsa int not null,
+    -> stok int not null,
+    -> harga int not null);
+ERROR 1046 (3D000): No database selected
+mysql> use klinik_kesehatan;
+Database changed
+mysql> create table obat(
+    -> id_obat varchar(10) primary key not null,
+    -> nama_obat varchar(50) not null,
+    -> jenis varchar(20) not null,
+    -> tahun_kadaluwarsa int not null,
+    -> stok int not null,
+    -> harga int not null);
+Query OK, 0 rows affected (0.51 sec)
+
+mysql> insert table obat (id_obat, nama_obat, jenis, tahun_kadaluwarsa, stok, harga) values (
+    -> ('OB001', 'Paracetamol', 'Tablet' ,2024, 20, 5000),
+    -> ('OB002', 'Amoxicillin', 'Kapsul', 2023, 12, 7500),
+    -> ('OB003', 'Vitamin C', 'Tablet' ,2025 ,30 ,3000)
+    -> ('OB004', 'Antasida Cair' ,2023 ,8 ,6000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table obat (id_obat, nama_obat, jenis, tahun_kadaluwarsa, stok, harga) values (
+' at line 1
+mysql> INSERT INTO obat (id_obat, nama_obat, jenis, tahun_kadaluwarsa, stok, harga)
+    -> values
+    -> ('OB001', 'Paracetamol', 'Tablet', 2024, 20, 5000),
+    -> ('OB002', 'Amoxicillin', 'Kapsul', 2023, 12, 7500),
+    -> ('OB003', 'Vitamin C', 'Tablet', 2025, 30, 3000),
+    -> ('OB004', 'Antasida Cair', 2023, 8, 6000),
+    -> ('OB005', 'Ibuprofen', 'Tablet', 2024, 5, 8000),
+    -> ('OB006', 'Cetirizine', 'Tablet', 2025, 15, 7000),
+    -> ('OB007', 'Loratadine', 'Tablet', 2024, 9, 7500),
+    -> ('OB008', 'Salbutamol', 'Inhaler', 2024, 11, 25000),
+    -> ('OB009', 'Dextromethorphan', 'Sirup', 2023, 7, 12000),
+    -> ('OB010', 'Omeprazole', 'Kapsul', 2025, 10, 10000);
+ERROR 1136 (21S01): Column count doesn't match value count at row 4
+mysql> INSERT INTO obat (id_obat, nama_obat, jenis, tahun_kadaluwarsa, stok, harga)
+    -> values
+    -> ('OB001', 'Paracetamol', 'Tablet', 2024, 20, 5000),
+    -> ('OB002', 'Amoxicillin', 'Kapsul', 2023, 12, 7500),
+    -> ('OB003', 'Vitamin C', 'Tablet', 2025, 30, 3000),
+    -> ('OB004', 'Antasida', 'Cair', 2023, 8, 6000),
+    -> ('OB005', 'Ibuprofen', 'Tablet', 2024, 5, 8000),
+    -> ('OB006', 'Cetirizine', 'Tablet', 2025, 15, 7000),
+    -> ('OB007', 'Loratadine', 'Tablet', 2024, 9, 7500),
+    -> ('OB008', 'Salbutamol', 'Inhaler', 2024, 11, 25000),
+    -> ('OB009', 'Dextromethorphan', 'Sirup', 2023, 7, 12000),
+    -> ('OB010', 'Omeprazole', 'Kapsul', 2025, 10, 10000);
+Query OK, 10 rows affected (2.42 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE pasien (
+    ->  id_pasien VARCHAR(10) PRIMARY KEY NOT NULL,
+    -> nama_pasien VARCHAR(50) NOT NULL,
+    -> kota VARCHAR(30) NOT NULL);
+Query OK, 0 rows affected (8.31 sec)
+
+mysql> INSERT INTO pasien (id_pasien, nama_pasien, kota)
+    -> values
+    -> ('PS001', 'Dedi Susanto', 'Semarang'),
+    -> ('PS002', 'Linda Maharani', 'Yogyakarta'),
+    -> ('PS003', 'Bayu Prasetya', 'Semarang'),
+    -> ('PS004', 'Rani Oktaviani', 'Solo'),
+    -> ('PS005', 'Putri Damayanti', 'Semarang'),
+    -> ('PS006', 'Toni Aditya', 'Jakarta'),
+    -> ('PS007', 'Silvia Ramadhani', 'Semarang'),
+    -> ('PS008', 'Fikri Irawan', 'Surabaya'),
+    -> ('PS009', 'Rika Setyaningsih', 'Bandung'),
+    -> ('PS010', 'Doni Kurniawan', 'Semarang');
+Query OK, 10 rows affected (0.42 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> create table pembelian_obat(
+    -> id_pembelian VARCHAR(10) PRIMARY KEY NOT NULL,
+    -> id_obat VARCHAR(10),
+    -> jumlah INT NOT NULL,
+    -> tanggal_beli DATE NOT NULL,
+    -> FOREIGN KEY (id_obat) REFERENCES obat(id_obat));
+Query OK, 0 rows affected (0.46 sec)
+
+mysql> insert into pembelian_obat (id_pembelian, id_obat, jumlah, tanggal_beli)
+    -> values
+    -> ('PB001', 'OB001', 5, '2024-05-01'),
+    -> ('PB002', 'OB002', 10, '2024-05-02'),
+    -> ('PB003', 'OB003', 7, '2024-05-02'),
+    -> ('PB004', 'OB004', 3, '2024-05-03'),
+    -> ('PB005', 'OB005', 2, '2024-05-04'),
+    -> ('PB006', 'OB006', 4, '2024-05-04'),
+    -> ('PB007', 'OB007', 1, '2024-05-05'),
+    -> ('PB008', 'OB008', 3, '2024-05-06'),
+    -> ('PB009', 'OB009', 5, '2024-05-06'),
+    -> ('PB010', 'OB010', 2, '2024-05-07');
+Query OK, 10 rows affected (0.14 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> create table resep(
+    -> id_resep VARCHAR(10) PRIMARY KEY NOT NULL,
+    -> id_pasien VARCHAR(10),
+    -> id_obat VARCHAR(10),
+    -> jumlah INT NOT NULL,
+    -> total_tagihan INT NOT NULL,
+    -> tanggal_resep DATE NOT NULL,
+    -> FOREIGN KEY (id_pasien) REFERENCES pasien(id_pasien),
+    -> FOREIGN KEY (id_obat) REFERENCES obat(id_obat));
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> insert into (id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep)
+    -> values
+    -> ('RS001', 'PS001', 'OB001', 2, 10000, '2024-05-01'),
+    -> ('RS002', 'PS002', 'OB003', 1, 3000, '2024-05-01'),
+    -> ('RS003', 'PS003', 'OB005', 2, 16000, '2024-05-02'),
+    -> ('RS004', 'PS004', 'OB004', 1, 6000, '2024-05-02'),
+    -> ('RS005', 'PS005', 'OB002', 3, 22500, '2024-05-03'),
+    -> ('RS006', 'PS006', 'OB006', 1, 7000, '2024-05-04'),
+    -> ('RS007', 'PS007', 'OB007', 2, 15000, '2024-05-04'),
+    -> ('RS008', 'PS008', 'OB008', 1, 25000, '2024-05-05'),
+    -> ('RS009', 'PS009', 'OB009', 1, 12000, '2024-05-06'),
+    -> ('RS010', 'PS010', 'OB010', 2, 20000, '2024-05-06');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep)
+values
+('RS' at line 1
+mysql> insert into resep(id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep)
+    -> values
+    -> ('RS001', 'PS001', 'OB001', 2, 10000, '2024-05-01'),
+    -> ('RS002', 'PS002', 'OB003', 1, 3000, '2024-05-01'),
+    -> ('RS003', 'PS003', 'OB005', 2, 16000, '2024-05-02'),
+    -> ('RS004', 'PS004', 'OB004', 1, 6000, '2024-05-02'),
+    -> ('RS005', 'PS005', 'OB002', 3, 22500, '2024-05-03'),
+    -> ('RS006', 'PS006', 'OB006', 1, 7000, '2024-05-04'),
+    -> ('RS007', 'PS007', 'OB007', 2, 15000, '2024-05-04'),
+    -> ('RS008', 'PS008', 'OB008', 1, 25000, '2024-05-05'),
+    -> ('RS009', 'PS009', 'OB009', 1, 12000, '2024-05-06'),
+    -> ('RS010', 'PS010', 'OB010', 2, 20000, '2024-05-06');
+Query OK, 10 rows affected (0.04 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> #Alissya Iklima Nur Ramadani 
+mysql> #230302003
+mysql> #TI2A
+mysql> #1. tampilkan seluruh isi yang ada pada masing - masing table
+mysql> show tables;
++----------------------------+
+| Tables_in_klinik_kesehatan |
++----------------------------+
+| obat                       |
+| pasien                     |
+| pembelian_obat             |
+| resep                      |
++----------------------------+
+4 rows in set (0.72 sec)
+
+mysql> select * from obat;
++---------+------------------+---------+-------------------+------+-------+
+| id_obat | nama_obat        | jenis   | tahun_kadaluwarsa | stok | harga |
++---------+------------------+---------+-------------------+------+-------+
+| OB001   | Paracetamol      | Tablet  |              2024 |   20 |  5000 |
+| OB002   | Amoxicillin      | Kapsul  |              2023 |   12 |  7500 |
+| OB003   | Vitamin C        | Tablet  |              2025 |   30 |  3000 |
+| OB004   | Antasida         | Cair    |              2023 |    8 |  6000 |
+| OB005   | Ibuprofen        | Tablet  |              2024 |    5 |  8000 |
+| OB006   | Cetirizine       | Tablet  |              2025 |   15 |  7000 |
+| OB007   | Loratadine       | Tablet  |              2024 |    9 |  7500 |
+| OB008   | Salbutamol       | Inhaler |              2024 |   11 | 25000 |
+| OB009   | Dextromethorphan | Sirup   |              2023 |    7 | 12000 |
+| OB010   | Omeprazole       | Kapsul  |              2025 |   10 | 10000 |
++---------+------------------+---------+-------------------+------+-------+
+10 rows in set (0.03 sec)
+
+mysql> select * from pasien;
++-----------+-------------------+------------+
+| id_pasien | nama_pasien       | kota       |
++-----------+-------------------+------------+
+| PS001     | Dedi Susanto      | Semarang   |
+| PS002     | Linda Maharani    | Yogyakarta |
+| PS003     | Bayu Prasetya     | Semarang   |
+| PS004     | Rani Oktaviani    | Solo       |
+| PS005     | Putri Damayanti   | Semarang   |
+| PS006     | Toni Aditya       | Jakarta    |
+| PS007     | Silvia Ramadhani  | Semarang   |
+| PS008     | Fikri Irawan      | Surabaya   |
+| PS009     | Rika Setyaningsih | Bandung    |
+| PS010     | Doni Kurniawan    | Semarang   |
++-----------+-------------------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from pembelian_obat;
++--------------+---------+--------+--------------+
+| id_pembelian | id_obat | jumlah | tanggal_beli |
++--------------+---------+--------+--------------+
+| PB001        | OB001   |      5 | 2024-05-01   |
+| PB002        | OB002   |     10 | 2024-05-02   |
+| PB003        | OB003   |      7 | 2024-05-02   |
+| PB004        | OB004   |      3 | 2024-05-03   |
+| PB005        | OB005   |      2 | 2024-05-04   |
+| PB006        | OB006   |      4 | 2024-05-04   |
+| PB007        | OB007   |      1 | 2024-05-05   |
+| PB008        | OB008   |      3 | 2024-05-06   |
+| PB009        | OB009   |      5 | 2024-05-06   |
+| PB010        | OB010   |      2 | 2024-05-07   |
++--------------+---------+--------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from resep;
++----------+-----------+---------+--------+---------------+---------------+
+| id_resep | id_pasien | id_obat | jumlah | total_tagihan | tanggal_resep |
++----------+-----------+---------+--------+---------------+---------------+
+| RS001    | PS001     | OB001   |      2 |         10000 | 2024-05-01    |
+| RS002    | PS002     | OB003   |      1 |          3000 | 2024-05-01    |
+| RS003    | PS003     | OB005   |      2 |         16000 | 2024-05-02    |
+| RS004    | PS004     | OB004   |      1 |          6000 | 2024-05-02    |
+| RS005    | PS005     | OB002   |      3 |         22500 | 2024-05-03    |
+| RS006    | PS006     | OB006   |      1 |          7000 | 2024-05-04    |
+| RS007    | PS007     | OB007   |      2 |         15000 | 2024-05-04    |
+| RS008    | PS008     | OB008   |      1 |         25000 | 2024-05-05    |
+| RS009    | PS009     | OB009   |      1 |         12000 | 2024-05-06    |
+| RS010    | PS010     | OB010   |      2 |         20000 | 2024-05-06    |
++----------+-----------+---------+--------+---------------+---------------+
+10 rows in set (0.02 sec)
+
+mysql> #2. buatkan triger untuk mengurangi stok obat setelah terjadi pemberian resep. tampilkan!
+mysql> delimiter //
+mysql> create trigger obat 
+    -> after insert on resep
+    -> for each row
+    -> begin
+    -> update obat
+    -> set stok = stok - 1
+    -> where id_obat = new.id_obat;
+    -> end //
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> select id_obat, nama_obat, stok from obat where id_obat = 'OB001';
+    -> //
++---------+-------------+------+
+| id_obat | nama_obat   | stok |
++---------+-------------+------+
+| OB001   | Paracetamol |   20 |
++---------+-------------+------+
+1 row in set (0.03 sec)
+
+mysql> delimiter ;
+mysql> select * from obat;
++---------+------------------+---------+-------------------+------+-------+
+| id_obat | nama_obat        | jenis   | tahun_kadaluwarsa | stok | harga |
++---------+------------------+---------+-------------------+------+-------+
+| OB001   | Paracetamol      | Tablet  |              2024 |   20 |  5000 |
+| OB002   | Amoxicillin      | Kapsul  |              2023 |   12 |  7500 |
+| OB003   | Vitamin C        | Tablet  |              2025 |   30 |  3000 |
+| OB004   | Antasida         | Cair    |              2023 |    8 |  6000 |
+| OB005   | Ibuprofen        | Tablet  |              2024 |    5 |  8000 |
+| OB006   | Cetirizine       | Tablet  |              2025 |   15 |  7000 |
+| OB007   | Loratadine       | Tablet  |              2024 |    9 |  7500 |
+| OB008   | Salbutamol       | Inhaler |              2024 |   11 | 25000 |
+| OB009   | Dextromethorphan | Sirup   |              2023 |    7 | 12000 |
+| OB010   | Omeprazole       | Kapsul  |              2025 |   10 | 10000 |
++---------+------------------+---------+-------------------+------+-------+
+10 rows in set (0.00 sec)
+
+mysql> delimiter //
+mysql> create trigger obat 
+    -> after insert on resep
+    -> for each row
+    -> begin
+    -> update obat
+    -> set stok = stok - new.jumlah
+    -> where id_obat = new.id_obat;
+    -> end //
+ERROR 1359 (HY000): Trigger already exists
+mysql> DROP TRIGGER IF EXISTS obat;
+    -> //
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create trigger obat 
+    -> after insert on resep
+    -> for each row
+    -> begin
+    -> update obat
+    -> set stok = stok - new.jumlah
+    -> where id_obat = new.id_obat;
+    -> end //
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> delimiter ;
+mysql> select id_obat, nama_obat, stok from obat where id_obat = 'OB001';
++---------+-------------+------+
+| id_obat | nama_obat   | stok |
++---------+-------------+------+
+| OB001   | Paracetamol |   20 |
++---------+-------------+------+
+1 row in set (0.00 sec)
+
+mysql> #2. buatkan triger untuk menambah stok obat setelah terjadi pembelian obat. tampilkan!
+mysql> create trigger pembelian_obat 
+    -> after insert on penjual 
+    -> for each row
+    -> begin
+    -> update pembelian_obat
+    -> set jumlah = jumlah - new.jumlah//
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '/' at line 6
+mysql> DROP TRIGGER IF EXISTS obat;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create trigger obat 
+    -> after insert on resep
+    -> for each row
+    -> begin
+    -> update obat
+    -> set stok = stok - new.stok
+    -> where id_obat = new.id_obat;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 7
+mysql> delimiter //
+mysql> create trigger obat 
+    -> after insert on resep
+    -> for each row
+    -> begin
+    -> update obat
+    -> set stok = stok - new.stok
+    -> where id_obat = new.id_obat;
+    -> end //
+ERROR 1054 (42S22): Unknown column 'stok' in 'NEW'
+mysql> create trigger obat 
+    -> after insert on resep
+    -> for each row
+    -> begin
+    -> update obat
+    -> set stok = stok - 1
+    -> where id_obat = new.id_obat;
+    -> end //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select id_obat, nama_obat, stok from obat where id_obat = 'OB001';
+    -> //
++---------+-------------+------+
+| id_obat | nama_obat   | stok |
++---------+-------------+------+
+| OB001   | Paracetamol |   20 |
++---------+-------------+------+
+1 row in set (0.00 sec)
+
+mysql> delimiter ;
+mysql> #3. buatkan triger untuk menambah stok obat setelah terjadi pembelian obat. tampilkan!
+mysql> create trigger pembelian_obat 
+    -> after insert on penjual 
+    -> for each row\\
+ERROR: 
+Unknown command '\\'.
+    -> create trigger pembelian_obat 
+    -> /
+    -> ^C
+mysql> delimiter //
+mysql> create trigger pembelian_obat 
+    -> after insert on pembelian_obat
+    -> for each row
+    -> begin
+    -> update jumlah
+    -> set jumlah = jumlah + new.jumlah
+    -> where id_pembelian = new.id_pembelian;
+    -> end //
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> DROP TRIGGER IF EXISTS pembelian_obat;
+    -> //
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create trigger pembelian_obat 
+    -> after insert on pembelian_obat
+    -> for each row
+    -> begin
+    -> update obat
+    -> set stok = stok + new.jumlah
+    -> where id_obat = new.id_obat;
+    -> end //
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT id_obat, nama_obat, stok FROM obat WHERE id_obat = 'OB001';
+    -> //
++---------+-------------+------+
+| id_obat | nama_obat   | stok |
++---------+-------------+------+
+| OB001   | Paracetamol |   20 |
++---------+-------------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into pembelian_obat (id_pembelian, id_obat, jumlah, tanggal_beli)
+    -> values
+    -> ('PB011', 'OB001', 5, '2024-05-08');
+    -> //
+Query OK, 1 row affected (0.06 sec)
+
+mysql> SELECT id_obat, nama_obat, stok FROM obat WHERE id_obat = 'OB001';
+    -> //
++---------+-------------+------+
+| id_obat | nama_obat   | stok |
++---------+-------------+------+
+| OB001   | Paracetamol |   25 |
++---------+-------------+------+
+1 row in set (0.00 sec)
+
+mysql> delimiter ;
+mysql> #TAMPILAN NO 2 
+mysql> SELECT id_obat, nama_obat, stok FROM obat WHERE id_obat = 'OB001';
++---------+-------------+------+
+| id_obat | nama_obat   | stok |
++---------+-------------+------+
+| OB001   | Paracetamol |   25 |
++---------+-------------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into resep (id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep)
+    -> VALUES ('RS011', 'PS001', 'OB001', 2, 10000, '2024-05-08');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT id_obat, nama_obat, stok FROM obat WHERE id_obat = 'OB001';
++---------+-------------+------+
+| id_obat | nama_obat   | stok |
++---------+-------------+------+
+| OB001   | Paracetamol |   24 |
++---------+-------------+------+
+1 row in set (0.00 sec)
+
+mysql> #4. Buatlah trigger untuk menjumlahkan total tagihan resep secara otomatis. Tampilkan !
+mysql> delimiter //
+mysql> create trigger total_tagihan
+    -> after insert on resep
+    -> for each row
+    -> begin
+    -> declare harga_obat int;
+    -> select harga into harga_obat
+    -> from obat
+    -> where id_obat = new.id_obat;
+    -> update resep
+    -> set total_tagihan = harga_obat * new.jumlah
+    -> where id_resep = new.id_resep;
+    -> end //
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> delimiter ;
+mysql> SELECT id_resep, id_pasien, id_obat, jumlah, total_tagihan FROM resep WHERE id_resep = 'RS001';
++----------+-----------+---------+--------+---------------+
+| id_resep | id_pasien | id_obat | jumlah | total_tagihan |
++----------+-----------+---------+--------+---------------+
+| RS001    | PS001     | OB001   |      2 |         10000 |
++----------+-----------+---------+--------+---------------+
+1 row in set (0.00 sec)
+
+mysql> insert into resep (id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into resep (id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep)
+    -> values 
+    -> ('RS011', 'PS001', 'OB001', 3, 0, '2024-05-08');
+ERROR 1062 (23000): Duplicate entry 'RS011' for key 'resep.PRIMARY'
+mysql> insert into resep (id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into resep (id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep)
+    -> values 
+    -> ('RS001', 'PS001', 'OB001', 3, 0, '2024-05-08');
+ERROR 1062 (23000): Duplicate entry 'RS001' for key 'resep.PRIMARY'
+mysql> insert into resep (id_resep, id_pasien, id_obat, jumlah, total_tagihan, tanggal_resep)
+    -> values 
+    -> ('RS012', 'PS001', 'OB001', 3, 0, '2024-05-08');
+ERROR 1442 (HY000): Can't update table 'resep' in stored function/trigger because it is already used by statement which invoked this stored function/trigger.
+mysql> SELECT id_resep, id_pasien, id_obat, jumlah, total_tagihan FROM resep WHERE id_resep = 'RS011';
++----------+-----------+---------+--------+---------------+
+| id_resep | id_pasien | id_obat | jumlah | total_tagihan |
++----------+-----------+---------+--------+---------------+
+| RS011    | PS001     | OB001   |      2 |         10000 |
++----------+-----------+---------+--------+---------------+
+1 row in set (0.00 sec)
+
+mysql> #5. Buatlah fungsi untuk menghitung jumlah obat yang kedaluwarsa tahun 2023. Tampilkan !
+mysql> delimiter //
+mysql> create function obat_kadaluwarsa_2023()
+    -> returns int
+    -> deterministic
+    -> begin
+    -> declare total_obat int;
+    -> select sum(stok) into total_obat 
+    -> from obat
+    -> where tahun_kadaluwarsa = 2023;
+    -> return total_obat;
+    -> end //
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> delimiter //
+mysql> delimiter ;
+mysql> SELECT hitung_obat_kedaluwarsa_2023() AS obat_kedaluwarsa;
+ERROR 1305 (42000): FUNCTION klinik_kesehatan.hitung_obat_kedaluwarsa_2023 does not exist
+mysql> desc obat;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| id_obat           | varchar(10) | NO   | PRI | NULL    |       |
+| nama_obat         | varchar(50) | NO   |     | NULL    |       |
+| jenis             | varchar(20) | NO   |     | NULL    |       |
+| tahun_kadaluwarsa | int         | NO   |     | NULL    |       |
+| stok              | int         | NO   |     | NULL    |       |
+| harga             | int         | NO   |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+6 rows in set (0.47 sec)
+
+mysql> SELECT hitung_obat_kedaluwarsa_2023() AS tahun_kedaluwarsa;
+ERROR 1305 (42000): FUNCTION klinik_kesehatan.hitung_obat_kedaluwarsa_2023 does not exist
+mysql> SHOW FUNCTION STATUS WHERE Db = 'klinik_kesehatan';
++------------------+-----------------------+----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| Db               | Name                  | Type     | Definer        | Modified            | Created             | Security_type | Comment | character_set_client | collation_connection | Database Collation |
++------------------+-----------------------+----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| klinik_kesehatan | obat_kadaluwarsa_2023 | FUNCTION | root@localhost | 2025-05-22 09:45:21 | 2025-05-22 09:45:21 | DEFINER       |         | cp850                | cp850_general_ci     | utf8mb4_0900_ai_ci |
++------------------+-----------------------+----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+1 row in set (0.06 sec)
+
+mysql> SELECT hitung_obat_kedaluwarsa_2023() AS obat_kedaluwarsa;
+ERROR 1305 (42000): FUNCTION klinik_kesehatan.hitung_obat_kedaluwarsa_2023 does not exist
+mysql> SELECT hitung_obat_kedaluwarsa_2023() AS obat_kedaluwarsa;
+ERROR 1305 (42000): FUNCTION klinik_kesehatan.hitung_obat_kedaluwarsa_2023 does not exist
+mysql> #6. Buatlah fungsi untuk menghitung jumlah pasien dari kota Semarang. Tampilkan !
+mysql> DELIMITER //
+mysql> create function hitung_pasien_semarang()
+    -> returns int
+    -> DETERMINISTIC
+    -> begin
+    -> DECLARE jumlah_pasien INT;
+    -> SELECT COUNT(*) INTO jumlah_pasien
+    -> from pasien
+    -> where kota = 'Semarang';
+    -> return jumlah_pasien;
+    -> end //
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SELECT hitung_pasien_semarang() AS jumlah_pasien_semarang;
+    -> //
++------------------------+
+| jumlah_pasien_semarang |
++------------------------+
+|                      5 |
++------------------------+
+1 row in set (0.05 sec)
+
+mysql> #7. Buatlah prosedur untuk mengupdate stok obat berdasarkan ID. Tampilkan !
+mysql> delimiter //
+mysql> create procedure update_stok_obat(IN id_obat VARCHAR(10), IN stok_baru INT)
+    -> begin
+    -> update obat 
+    -> set stok = stok_baru
+    -> where id_obat = id_obat;
+    -> select 'Stok obat telah berhasil diupdate.' as pesan;
+    -> end //
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql> CALL update_stok_obat('OB001', 50);
++------------------------------------+
+| pesan                              |
++------------------------------------+
+| Stok obat telah berhasil diupdate. |
++------------------------------------+
+1 row in set (0.04 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> SELECT * FROM obat WHERE id_obat = 'OB001';
++---------+-------------+--------+-------------------+------+-------+
+| id_obat | nama_obat   | jenis  | tahun_kadaluwarsa | stok | harga |
++---------+-------------+--------+-------------------+------+-------+
+| OB001   | Paracetamol | Tablet |              2024 |   50 |  5000 |
++---------+-------------+--------+-------------------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> #8. Buatlah prosedur untuk menampilkan nama obat dan jenisnya berdasarkan tahun kedaluwarsa. Tampilkan !
+mysql> delimiter //
+mysql> create procedure tampilkan_obat_berdasarkan_tahun_kadaluwarsa(IN tahun INT)
+    -> begin
+    -> select nama_obat, jenis
+    -> from obat
+    -> where tahun_kadaluwarsa = tahun;
+    -> end //
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> delimiter ;
+mysql> CALL tampilkan_obat_berdasarkan_tahun_kadaluwarsa(2023);
++------------------+--------+
+| nama_obat        | jenis  |
++------------------+--------+
+| Amoxicillin      | Kapsul |
+| Antasida         | Cair   |
+| Dextromethorphan | Sirup  |
++------------------+--------+
+3 rows in set (0.01 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> #9. Buatlah fungsi untuk menampilkan harga dan harga setelah diskon 10%. Tampilkan !
+mysql> delimiter //
+mysql> create function harga_setelah_diskon(id_obat VARCHAR(10))
+    -> returns decimal(10,2)
+    -> deterministic
+    -> begin
+    -> declare harga_obat int;
+    -> declare harga_diskon decimal(10,2);
+    -> select harga INTO harga_obat
+    -> from obat
+    -> where id_obat = id_obat;
+    -> SET harga_diskon = harga_obat * 0.9;
+    -> return harga
+    -> //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 11
+mysql> create function harga_setelah_diskon(id_obat VARCHAR(10))
+    -> returns decimal(10,2)
+    -> deterministic
+    -> begin
+    -> declare harga_obat int;
+    -> declare harga_diskon decimal(10,2);
+    -> select harga INTO harga_obat
+    -> from obat
+    -> where id_obat = id_obat;
+    -> SET harga_diskon = harga_obat * 0.9;
+    -> return harga_diskon;
+    -> end //
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> SELECT harga_setelah_diskon('OB001') AS harga_setelah_diskon;
+    -> //
+ERROR 1172 (42000): Result consisted of more than one row
+mysql>  DROP TRIGGER IF EXISTS harga_setelah_diskon//
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> create function harga_setelah_diskon(id_obat VARCHAR(10))
+    -> returns decimal(10,2)
+    -> deterministic
+    -> begin
+    -> declare harga_obat int;
+    -> declare harga_diskon decimal(10,2);
+    -> select harga INTO harga_obat
+    -> from obat
+    -> where id_obat = id_obat;
+    -> limit 1;
+    -> SET harga_diskon = harga_obat * 0.9;
+    -> return harga_diskon;
+    -> end //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'limit 1;
+SET harga_diskon = harga_obat * 0.9;
+return harga_diskon;
+end' at line 10
+mysql> create function harga_setelah_diskon(id_obat VARCHAR(10))
+    -> returns decimal(10,2)
+    -> deterministic
+    -> begin
+    -> declare harga_obat int;
+    -> declare harga_diskon decimal(10,2);
+    -> select harga INTO harga_obat
+    -> from obat
+    -> where id_obat = id_obat;
+    -> SET harga_diskon = harga_obat * 0.9;
+    -> return harga
+    -> //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 11
+mysql> create function harga_setelah_diskon(id_obat VARCHAR(10))
+    -> returns decimal(10,2)
+    -> deterministic
+    -> begin
+    -> declare harga_obat int;
+    -> declare harga_diskon decimal(10,2);
+    -> select harga INTO harga_obat
+    -> from obat
+    -> where id_obat = id_obat;
+    -> SET harga_diskon = harga_obat * 0.9;
+    -> return harga_diskon;
+    -> end //
+ERROR 1304 (42000): FUNCTION harga_setelah_diskon already exists
+mysql> #10. DELIMITER //
+mysql> CREATE FUNCTION status_stok_obat(id_obat VARCHAR(10))
+    -> RETURNS VARCHAR(10)
+    -> DETERMINISTIC 
+    -> begin
+    ->  DECLARE stok_obat INT;
+    ->  DECLARE status VARCHAR(10);
+    -> SELECT stok INTO stok_obat
+    -> ^C
+mysql> CREATE FUNCTION status_stok_obat(id_obat VARCHAR(10))
+    -> ^C
+mysql> #10. Buatlah fungsi untuk menampilkan status stok obat:
+mysql> CREATE FUNCTION status_stok_obat(id_obat VARCHAR(10))
+    -> RETURNS VARCHAR(10)
+    -> DETERMINISTIC 
+    -> begin
+    ->  DECLARE stok_obat INT;
+    ->  DECLARE status VARCHAR(10);
+    -> SELECT stok INTO stok_obat
+    -> from obat
+    -> WHERE id_obat = id_obat
+    -> limit 1;
+    -> IF stok_obat >= 10 THEN
+    -> SET status = 'Aman';
+    -> else
+    ->  SET status = 'Kritis';
+    -> end if;
+    -> return status;
+    -> end //
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> SELECT status_stok_obat('OB001') AS status_stok;
+    -> //
++-------------+
+| status_stok |
++-------------+
+| Aman        |
++-------------+
+1 row in set (0.02 sec)
+
+mysql> #11. Buatlah prosedur untuk menghitung IMT (Indeks Massa Tubuh) dari berat dan tinggi pasien. Tampilkan !
+mysql> DELIMITER //
+mysql> create procedure hitung_imt(berat_badan DECIMAL(5,2), tinggi_badan DECIMAL(5,2))\
+    -> //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create procedure hitung_imt(berat_badan DECIMAL(5,2), tinggi_badan DECIMAL(5,2))
+    -> begin
+    -> declare imt DECIMAL(5,2);
+    -> SET imt = berat_badan / (tinggi_badan * tinggi_badan);
+    -> SELECT imt AS IMT;
+    -> end //
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> CALL hitung_imt(70, 1.75);
+    -> //
++-------+
+| IMT   |
++-------+
+| 22.86 |
++-------+
+1 row in set (0.02 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql> #12.Hapus database db_klinik_kesehatan lalu tampilkan perintahnya.
+mysql> drop database db_klinik_kesehatan;
+ERROR 1008 (HY000): Can't drop database 'db_klinik_kesehatan'; database doesn't exist
+mysql> drop database klinik_kesehatan;
+Query OK, 4 rows affected (0.51 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| perpuskita         |
+| sys                |
++--------------------+
+5 rows in set (0.28 sec)
+
